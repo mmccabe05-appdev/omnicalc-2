@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   get("/addition/results", { :controller => "application", :action => "addition_results" })
   get("/subtract", { :controller => "application", :action => "subtract" })
   get("/subtraction/results", { :controller => "application", :action => "subtraction_results" })
-  get("/multiple", { :controller => "application", :action => "multiply" })
+  get("/multiply", { :controller => "application", :action => "multiply" })
+  get("/multiplication/results", { :controller => "application", :action => "multiplication_results" })
+  get("/divide", { :controller => "application", :action => "divide" })
+  get("/division/results", { :controller => "application", :action => "division_results" })
+
 
 end
