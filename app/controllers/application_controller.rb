@@ -1,3 +1,6 @@
+require "open-uri"
+require "json"
+
 class ApplicationController < ActionController::Base
   def addition
     # content to go here
@@ -57,5 +60,25 @@ class ApplicationController < ActionController::Base
     @result = @first_number / @second_number
 
     render({ :template => "division_results.html.erb" })
+  end
+
+  def street_to_coordinates
+    # content to go here
+
+    render({ :template => "street_to_coordinates.html.erb" })
+  end
+
+  def street_to_coordinates_results
+    # content to go here
+    gmaps_key = ENV.fetch("GMAPS_KEY")
+
+    @address = params.fetch("street_address").to_s
+    gmaps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=LOCATION&key=MAPSKEY".gsub("LOCATION", @address).gsub("MAPSKEY", gmaps_key)
+    raw_data = URI.open(gmaps_url).read
+    results_hash = JSON.parse(raw_data)
+    @latitude = results_hash.fetch("results").at(0).fetch("geometry").fetch("location").fetch("lat")
+    @longitude = results_hash.fetch("results").at(0).fetch("geometry").fetch("location").fetch("lng")
+
+    render({ :template => "street_to_coordinates_results.html.erb" })
   end
 end
